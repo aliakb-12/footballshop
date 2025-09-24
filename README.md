@@ -93,3 +93,50 @@ contohnya ketika user membuka halaman produk, maka server akan mengirim/deliver 
 - untuk membuat halaman detail kita akan membuat view show_product dan mengirim objek berdasarkan id ke product_detail.html.
 
 6. Mungkin bisa tolong untuk kirimkan foto atau kasih tau eksplisit kepada mahasiswa bagaimana frontend seharusnya terlihat. (atau mungkin bisa kasih tau kalau bebas aja frontendnya yang penting ada hal-hal dalam checkbox)
+
+
+
+
+
+
+
+
+** TUGAS 4 **
+
+1. Authentication form adalah form bawan dari django. Ini biasanya dipakai untuk memverifikasi kredensial user atau password. 
+Kelebihan : 
+- Mudah dipakai dan tidak perlu dibuat lagi dengan developer (import dari django)
+- Sudah terbukti aman (backend django)
+Kekurangan:
+- 
+
+2. Autentikasi itu untuk memastikann identitas pengguna itu benar, contohnya seperti username dan password. Django.contrib.auth menyediakan model "User",fungsi "authenticate()" dan "login()". 
+Otorisasi menentukan apakah user yang sudah teridentifikasi punya hak untuk melakukan sesuatu, contohnya seperti admin ataupun akun developer. 
+
+3. Cookies:
+- Kelebihan : mudah diimplementasikan, persisentent dalam cross-requests
+- Kekurangan : ukurannya terbatas, bisa kena XSS (Bila javascript bisa membaca cookie)
+
+Session:
+- Kelebihan : Data-data sensitif tidak akan disimpan di client (lebih aman), ukuran tidak dibatasi seperti cookie
+- Kekurangan : Membutuhkan storage server untuk menyimpan data-data, seorang hacker bisa menghijack session id sebuah client dan mengimpersonate client tersebut
+
+4. Tidak sepenuhnya aman, cookies bisa aman jika dikonfigurasi dengan benar. Beberapa risiko utama seperti XSS, CSRF, session hijacking, session fixation
+Fitur Django:
+- CSRF protection: django menyediakan {% csrf_token %}, untuk mengesecure website dari CSRF
+- HttpOnly : mencegah JS baca cookie, mengset SESSION_COOKIE_HTTPONLY = True
+- Password Hashing : Django menggunakan password hashers, sehingga password tidak tersimpan dengan plain string
+
+Hal yang harus diwaspadai:
+- jangan menyimpan data sensitif dalam cookie
+- Pastikan website pakai HTTPS didalam production
+- Memakai rate limiting login
+
+5. 
+- Kedalam views.py membuat fungsi fungsi seperti login_user, register, logout_user dan juga menambah url masing-masing didalam urls.py
+- Register dari website localhost, dan membuat 2 akun. Setiap akaun akan memposting 3 product.
+- Didalam models.py, didalam class Product. Membuat "user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)", dan jalankan python3 makemigrations dan python3 migrate
+- Didalam models.py, didalam class Product. Membuat "created_at = models.DateTimeField(auto_now_add=True)" untuk menyimpan waktu kapan product dibikin. Didalam views.py dalam fungsi show_main, tambahkan "'last_login' : request.COOKIES.get('last_login', 'Never')". Lalu didalam main.html tambahkan "<h5>Sesi terakhir login: {{ last_login }}</h5>". 
+
+
+
